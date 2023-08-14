@@ -10,9 +10,9 @@ import XcodeKit
 
 class SourceEditorCommand: NSObject, XCSourceEditorCommand {
     
-    private let specialCharacters = "`~!@#$%^&*()_+{}[]:;\"'<>?,./'|\\-= \n"
+    fileprivate let specialCharacters = "`~!@#$%^&*()_+{}[]:;\"'<>?,./'|\\-= \n"
     
-    private static var previousTextRangeValue = XCSourceTextRange()
+    fileprivate static var previousTextRangeValue = XCSourceTextRange()
     
     func perform(with invocation: XCSourceEditorCommandInvocation, completionHandler: @escaping (Error?) -> Void ) -> Void {
         
@@ -29,6 +29,30 @@ class SourceEditorCommand: NSObject, XCSourceEditorCommand {
             
         case CommandIdentifier.moveSelectionWR.rawValue:
             moveSelectionOneWordRight(invocation: invocation)
+            
+        case CommandIdentifier.moveSelectionWD.rawValue:
+            moveSelectionOneLineDown(invocation: invocation)
+            
+        case CommandIdentifier.moveSelectionWD2.rawValue:
+            moveSelectionOneLineDown(invocation: invocation)
+            
+        case CommandIdentifier.moveSelectionWU.rawValue:
+            moveSelectionOneLineUp(invocation: invocation)
+            
+        case CommandIdentifier.moveSelectionWU2.rawValue:
+            moveSelectionOneLineUp(invocation: invocation)
+            
+        case CommandIdentifier.moveSelectionWEnd.rawValue:
+            moveSelectionToTheEnd(invocation: invocation)
+            
+        case CommandIdentifier.moveSelectionWStart.rawValue:
+            moveSelectionToTheStart(invocation: invocation)
+            
+        case CommandIdentifier.moveSelectionL.rawValue:
+            moveSelectionOneCharLeft(invocation: invocation)
+            
+        case CommandIdentifier.moveSelectionR.rawValue:
+            moveSelectionOneCharRight(invocation: invocation)
             
         default:
             print("Unavailable command")
@@ -52,7 +76,7 @@ class SourceEditorCommand: NSObject, XCSourceEditorCommand {
             }
             let leftCharactersToTheLeft = currentLineCharacters[0..<(position.column + caret + 1)]
             if leftCharactersToTheLeft.dropFirst().allSatisfy({ $0 == " " }) && caret >= -1 {
-                while position.column + caret != 0 {
+                while position.column + caret != -1 {
                     caret -= 1
                 }
                 break
@@ -106,7 +130,7 @@ class SourceEditorCommand: NSObject, XCSourceEditorCommand {
         return caret
     }
     
-    func moveCursorOneWordLeft(invocation: XCSourceEditorCommandInvocation) {
+    fileprivate func moveCursorOneWordLeft(invocation: XCSourceEditorCommandInvocation) {
         
         let textRange = invocation.buffer.selections.firstObject as! XCSourceTextRange
         
@@ -118,7 +142,7 @@ class SourceEditorCommand: NSObject, XCSourceEditorCommand {
         invocation.buffer.selections.add(textRange)
     }
     
-    func moveCursorOneWordRight(invocation: XCSourceEditorCommandInvocation) {
+    fileprivate func moveCursorOneWordRight(invocation: XCSourceEditorCommandInvocation) {
         let textRange = invocation.buffer.selections.firstObject as! XCSourceTextRange
         
         let caret = caretRight(textRange: textRange, lines: invocation.buffer.lines)
@@ -129,14 +153,128 @@ class SourceEditorCommand: NSObject, XCSourceEditorCommand {
         invocation.buffer.selections.add(textRange)
     }
     
-    func moveSelectionOneWordLeft(invocation: XCSourceEditorCommandInvocation) {
+    fileprivate func moveSelectionOneLineUp(invocation: XCSourceEditorCommandInvocation) {
+        let textRange = invocation.buffer.selections.firstObject as! XCSourceTextRange
+        
+        if (textRange.start.column == SourceEditorCommand.previousTextRangeValue.end.column &&
+            textRange.end.line == SourceEditorCommand.previousTextRangeValue.start.line) {
+            
+            textRange.end.column = textRange.start.column
+            textRange.start.column = SourceEditorCommand.previousTextRangeValue.start.column
+            textRange.end.line = textRange.start.line
+            textRange.start.line = SourceEditorCommand.previousTextRangeValue.start.line
+        }
+        
+        textRange.end.line -= 1
+        
+        if textRange.end.line == -1 {
+            return
+        }
+        
+        invocation.buffer.selections.removeAllObjects()
+        invocation.buffer.selections.add(textRange)
+        
+        SourceEditorCommand.previousTextRangeValue = textRange
+    }
+    
+    fileprivate func moveSelectionOneLineDown(invocation: XCSourceEditorCommandInvocation) {
+        let textRange = invocation.buffer.selections.firstObject as! XCSourceTextRange
+        
+        if (textRange.start.column == SourceEditorCommand.previousTextRangeValue.end.column &&
+            textRange.end.line == SourceEditorCommand.previousTextRangeValue.start.line) {
+            
+            textRange.end.column = textRange.start.column
+            textRange.start.column = SourceEditorCommand.previousTextRangeValue.start.column
+            textRange.end.line = textRange.start.line
+            textRange.start.line = SourceEditorCommand.previousTextRangeValue.start.line
+            
+        }
+        
+        textRange.end.line += 1
+        
+        if textRange.end.line > invocation.buffer.lines.count {
+            return
+        }
+        
+        invocation.buffer.selections.removeAllObjects()
+        invocation.buffer.selections.add(textRange)
+        
+        SourceEditorCommand.previousTextRangeValue = textRange
+    }
+    
+    fileprivate func moveSelectionToTheStart(invocation: XCSourceEditorCommandInvocation) {
+        let textRange = invocation.buffer.selections.firstObject as! XCSourceTextRange
+        
+        if (textRange.start.column == SourceEditorCommand.previousTextRangeValue.end.column &&
+            textRange.end.column == SourceEditorCommand.previousTextRangeValue.start.column &&
+            textRange.start.line == SourceEditorCommand.previousTextRangeValue.end.line &&
+            textRange.end.line == SourceEditorCommand.previousTextRangeValue.start.line) {
+            textRange.end.column = textRange.start.column
+            textRange.start.column = SourceEditorCommand.previousTextRangeValue.start.column
+            textRange.end.line = textRange.start.line
+            textRange.start.line = SourceEditorCommand.previousTextRangeValue.start.line
+        }
+        
+        var caret = 0
+        let currentLine = invocation.buffer.lines.object(at: textRange.end.line) as! String
+        let currentLineCharacters = currentLine.split(separator: "")
+        
+        while true {
+            let leftCharactersToTheLeft = currentLineCharacters[0..<(textRange.end.column + caret + 1)]
+            if leftCharactersToTheLeft.dropFirst().allSatisfy( { $0 == " " } ) {
+                if caret != 0 {
+                    caret += 1
+                    break
+                }
+                textRange.end.column = -1
+                invocation.buffer.selections.removeAllObjects()
+                invocation.buffer.selections.add(textRange)
+                SourceEditorCommand.previousTextRangeValue = textRange
+                return
+            }
+            caret -= 1
+        }
+        
+        textRange.end.column = textRange.end.column + caret
+        invocation.buffer.selections.removeAllObjects()
+        invocation.buffer.selections.add(textRange)
+        SourceEditorCommand.previousTextRangeValue = textRange
+    }
+    
+    fileprivate func moveSelectionToTheEnd(invocation: XCSourceEditorCommandInvocation) {
+        let textRange = invocation.buffer.selections.firstObject as! XCSourceTextRange
+        
+        if (textRange.start.column == SourceEditorCommand.previousTextRangeValue.end.column &&
+            textRange.end.column == SourceEditorCommand.previousTextRangeValue.start.column &&
+            textRange.start.line == SourceEditorCommand.previousTextRangeValue.end.line &&
+            textRange.end.line == SourceEditorCommand.previousTextRangeValue.start.line) {
+            textRange.end.column = textRange.start.column
+            textRange.start.column = SourceEditorCommand.previousTextRangeValue.start.column
+            textRange.end.line = textRange.start.line
+            textRange.start.line = SourceEditorCommand.previousTextRangeValue.start.line
+        }
+        
+        let currentLine = invocation.buffer.lines.object(at: textRange.end.line) as! String
+        let currentLineCharacters = currentLine.split(separator: "")
+        
+        textRange.end.column = currentLineCharacters.count - 1
+        invocation.buffer.selections.removeAllObjects()
+        invocation.buffer.selections.add(textRange)
+        SourceEditorCommand.previousTextRangeValue = textRange
+    }
+    
+    fileprivate func moveSelectionOneWordLeft(invocation: XCSourceEditorCommandInvocation) {
         
         let textRange = invocation.buffer.selections.firstObject as! XCSourceTextRange
         
         if (textRange.start.column == SourceEditorCommand.previousTextRangeValue.end.column &&
-            textRange.end.column == SourceEditorCommand.previousTextRangeValue.start.column) {
+            textRange.end.column == SourceEditorCommand.previousTextRangeValue.start.column &&
+            textRange.start.line == SourceEditorCommand.previousTextRangeValue.end.line &&
+            textRange.end.line == SourceEditorCommand.previousTextRangeValue.start.line) {
             textRange.end.column = textRange.start.column
             textRange.start.column = SourceEditorCommand.previousTextRangeValue.start.column
+            textRange.end.line = textRange.start.line
+            textRange.start.line = SourceEditorCommand.previousTextRangeValue.start.line
         }
         
         let caret = caretLeft(textRange: textRange, lines: invocation.buffer.lines)
@@ -149,14 +287,18 @@ class SourceEditorCommand: NSObject, XCSourceEditorCommand {
         
     }
     
-    func moveSelectionOneWordRight(invocation: XCSourceEditorCommandInvocation) {
+    fileprivate func moveSelectionOneWordRight(invocation: XCSourceEditorCommandInvocation) {
         
         let textRange = invocation.buffer.selections.firstObject as! XCSourceTextRange
         
         if (textRange.start.column == SourceEditorCommand.previousTextRangeValue.end.column &&
-            textRange.end.column == SourceEditorCommand.previousTextRangeValue.start.column) {
+            textRange.end.column == SourceEditorCommand.previousTextRangeValue.start.column &&
+            textRange.start.line == SourceEditorCommand.previousTextRangeValue.end.line &&
+            textRange.end.line == SourceEditorCommand.previousTextRangeValue.start.line) {
             textRange.end.column = textRange.start.column
             textRange.start.column = SourceEditorCommand.previousTextRangeValue.start.column
+            textRange.end.line = textRange.start.line
+            textRange.start.line = SourceEditorCommand.previousTextRangeValue.start.line
         }
         
         let caret = caretRight(textRange: textRange, lines: invocation.buffer.lines)
@@ -167,6 +309,52 @@ class SourceEditorCommand: NSObject, XCSourceEditorCommand {
         
         SourceEditorCommand.previousTextRangeValue = textRange
         
+    }
+    
+    fileprivate func moveSelectionOneCharLeft(invocation: XCSourceEditorCommandInvocation) {
+        let textRange = invocation.buffer.selections.firstObject as! XCSourceTextRange
+        
+        if (textRange.start.column == SourceEditorCommand.previousTextRangeValue.end.column &&
+            textRange.end.column == SourceEditorCommand.previousTextRangeValue.start.column &&
+            textRange.start.line == SourceEditorCommand.previousTextRangeValue.end.line &&
+            textRange.end.line == SourceEditorCommand.previousTextRangeValue.start.line) {
+            textRange.end.column = textRange.start.column
+            textRange.start.column = SourceEditorCommand.previousTextRangeValue.start.column
+            textRange.end.line = textRange.start.line
+            textRange.start.line = SourceEditorCommand.previousTextRangeValue.start.line
+        }
+        
+        if textRange.end.column != 0 {
+            textRange.end.column -= 1
+        }
+        
+        invocation.buffer.selections.removeAllObjects()
+        invocation.buffer.selections.add(textRange)
+        SourceEditorCommand.previousTextRangeValue = textRange
+    }
+    
+    fileprivate func moveSelectionOneCharRight(invocation: XCSourceEditorCommandInvocation) {
+        let textRange = invocation.buffer.selections.firstObject as! XCSourceTextRange
+        
+        if (textRange.start.column == SourceEditorCommand.previousTextRangeValue.end.column &&
+            textRange.end.column == SourceEditorCommand.previousTextRangeValue.start.column &&
+            textRange.start.line == SourceEditorCommand.previousTextRangeValue.end.line &&
+            textRange.end.line == SourceEditorCommand.previousTextRangeValue.start.line) {
+            textRange.end.column = textRange.start.column
+            textRange.start.column = SourceEditorCommand.previousTextRangeValue.start.column
+            textRange.end.line = textRange.start.line
+            textRange.start.line = SourceEditorCommand.previousTextRangeValue.start.line
+        }
+        
+        let line = invocation.buffer.lines.object(at: textRange.end.line) as! String
+        let lineCharacters = line.split(separator: "")
+        if textRange.end.column <= lineCharacters.count {
+            textRange.end.column += 1
+        }
+        
+        invocation.buffer.selections.removeAllObjects()
+        invocation.buffer.selections.add(textRange)
+        SourceEditorCommand.previousTextRangeValue = textRange
     }
     
 }
