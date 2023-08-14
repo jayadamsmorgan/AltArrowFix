@@ -11,7 +11,48 @@
 		CEADA0052A89226900761AA5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEADA0042A89226900761AA5 /* ContentView.swift */; };
 		CEADA0072A89226A00761AA5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CEADA0062A89226A00761AA5 /* Assets.xcassets */; };
 		CEADA00A2A89226A00761AA5 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CEADA0092A89226A00761AA5 /* Preview Assets.xcassets */; };
+		CEADA0182A89230500761AA5 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEADA0172A89230400761AA5 /* Cocoa.framework */; };
+		CEADA01D2A89230500761AA5 /* SourceEditorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEADA01C2A89230500761AA5 /* SourceEditorExtension.swift */; };
+		CEADA01F2A89230500761AA5 /* SourceEditorCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEADA01E2A89230500761AA5 /* SourceEditorCommand.swift */; };
+		CEADA0242A89230500761AA5 /* AltArrowExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = CEADA0152A89230400761AA5 /* AltArrowExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		CEADA0292A89231500761AA5 /* XcodeKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEADA0192A89230500761AA5 /* XcodeKit.framework */; };
+		CEADA02A2A89231500761AA5 /* XcodeKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CEADA0192A89230500761AA5 /* XcodeKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		CEADA0222A89230500761AA5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CEAD9FF72A89226900761AA5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CEADA0142A89230400761AA5;
+			remoteInfo = AltArrowExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		CEADA0282A89230500761AA5 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				CEADA0242A89230500761AA5 /* AltArrowExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CEADA02B2A89231500761AA5 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				CEADA02A2A89231500761AA5 /* XcodeKit.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		CEAD9FFF2A89226900761AA5 /* AltArrowFix.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AltArrowFix.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -20,6 +61,13 @@
 		CEADA0062A89226A00761AA5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CEADA0092A89226A00761AA5 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		CEADA00B2A89226A00761AA5 /* AltArrowFix.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AltArrowFix.entitlements; sourceTree = "<group>"; };
+		CEADA0152A89230400761AA5 /* AltArrowExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = AltArrowExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		CEADA0172A89230400761AA5 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		CEADA0192A89230500761AA5 /* XcodeKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XcodeKit.framework; path = Library/Frameworks/XcodeKit.framework; sourceTree = DEVELOPER_DIR; };
+		CEADA01C2A89230500761AA5 /* SourceEditorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceEditorExtension.swift; sourceTree = "<group>"; };
+		CEADA01E2A89230500761AA5 /* SourceEditorCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceEditorCommand.swift; sourceTree = "<group>"; };
+		CEADA0202A89230500761AA5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CEADA0212A89230500761AA5 /* AltArrowExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AltArrowExtension.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -30,6 +78,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CEADA0122A89230400761AA5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CEADA0182A89230500761AA5 /* Cocoa.framework in Frameworks */,
+				CEADA0292A89231500761AA5 /* XcodeKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -37,6 +94,8 @@
 			isa = PBXGroup;
 			children = (
 				CEADA0012A89226900761AA5 /* AltArrowFix */,
+				CEADA01B2A89230500761AA5 /* AltArrowExtension */,
+				CEADA0162A89230400761AA5 /* Frameworks */,
 				CEADA0002A89226900761AA5 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -45,6 +104,7 @@
 			isa = PBXGroup;
 			children = (
 				CEAD9FFF2A89226900761AA5 /* AltArrowFix.app */,
+				CEADA0152A89230400761AA5 /* AltArrowExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -69,6 +129,26 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		CEADA0162A89230400761AA5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CEADA0172A89230400761AA5 /* Cocoa.framework */,
+				CEADA0192A89230500761AA5 /* XcodeKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		CEADA01B2A89230500761AA5 /* AltArrowExtension */ = {
+			isa = PBXGroup;
+			children = (
+				CEADA01C2A89230500761AA5 /* SourceEditorExtension.swift */,
+				CEADA01E2A89230500761AA5 /* SourceEditorCommand.swift */,
+				CEADA0202A89230500761AA5 /* Info.plist */,
+				CEADA0212A89230500761AA5 /* AltArrowExtension.entitlements */,
+			);
+			path = AltArrowExtension;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -79,15 +159,35 @@
 				CEAD9FFB2A89226900761AA5 /* Sources */,
 				CEAD9FFC2A89226900761AA5 /* Frameworks */,
 				CEAD9FFD2A89226900761AA5 /* Resources */,
+				CEADA0282A89230500761AA5 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				CEADA0232A89230500761AA5 /* PBXTargetDependency */,
 			);
 			name = AltArrowFix;
 			productName = AltArrowFix;
 			productReference = CEAD9FFF2A89226900761AA5 /* AltArrowFix.app */;
 			productType = "com.apple.product-type.application";
+		};
+		CEADA0142A89230400761AA5 /* AltArrowExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CEADA0252A89230500761AA5 /* Build configuration list for PBXNativeTarget "AltArrowExtension" */;
+			buildPhases = (
+				CEADA0112A89230400761AA5 /* Sources */,
+				CEADA0122A89230400761AA5 /* Frameworks */,
+				CEADA0132A89230400761AA5 /* Resources */,
+				CEADA02B2A89231500761AA5 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AltArrowExtension;
+			productName = AltArrowExtension;
+			productReference = CEADA0152A89230400761AA5 /* AltArrowExtension.appex */;
+			productType = "com.apple.product-type.xcode-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -100,6 +200,9 @@
 				LastUpgradeCheck = 1430;
 				TargetAttributes = {
 					CEAD9FFE2A89226900761AA5 = {
+						CreatedOnToolsVersion = 14.3.1;
+					};
+					CEADA0142A89230400761AA5 = {
 						CreatedOnToolsVersion = 14.3.1;
 					};
 				};
@@ -118,6 +221,7 @@
 			projectRoot = "";
 			targets = (
 				CEAD9FFE2A89226900761AA5 /* AltArrowFix */,
+				CEADA0142A89230400761AA5 /* AltArrowExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -129,6 +233,13 @@
 			files = (
 				CEADA00A2A89226A00761AA5 /* Preview Assets.xcassets in Resources */,
 				CEADA0072A89226A00761AA5 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CEADA0132A89230400761AA5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -144,7 +255,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CEADA0112A89230400761AA5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CEADA01D2A89230500761AA5 /* SourceEditorExtension.swift in Sources */,
+				CEADA01F2A89230500761AA5 /* SourceEditorCommand.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		CEADA0232A89230500761AA5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CEADA0142A89230400761AA5 /* AltArrowExtension */;
+			targetProxy = CEADA0222A89230500761AA5 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		CEADA00C2A89226A00761AA5 /* Debug */ = {
@@ -263,6 +391,7 @@
 		CEADA00F2A89226A00761AA5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = AltArrowFix/AltArrowFix.entitlements;
@@ -290,6 +419,7 @@
 		CEADA0102A89226A00761AA5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = AltArrowFix/AltArrowFix.entitlements;
@@ -314,6 +444,60 @@
 			};
 			name = Release;
 		};
+		CEADA0262A89230500761AA5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = AltArrowExtension/AltArrowExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = U537EV56Z3;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = AltArrowExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = AltArrowExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.purpleclique.AltArrowFix.AltArrowExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		CEADA0272A89230500761AA5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = AltArrowExtension/AltArrowExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = U537EV56Z3;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = AltArrowExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = AltArrowExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.purpleclique.AltArrowFix.AltArrowExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -331,6 +515,15 @@
 			buildConfigurations = (
 				CEADA00F2A89226A00761AA5 /* Debug */,
 				CEADA0102A89226A00761AA5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CEADA0252A89230500761AA5 /* Build configuration list for PBXNativeTarget "AltArrowExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CEADA0262A89230500761AA5 /* Debug */,
+				CEADA0272A89230500761AA5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
