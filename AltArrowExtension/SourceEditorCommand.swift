@@ -137,8 +137,9 @@ class SourceEditorCommand: NSObject, XCSourceEditorCommand {
         let caret = caretLeft(textRange: textRange, lines: invocation.buffer.lines)
         
         invocation.buffer.selections.removeAllObjects()
-        textRange.start.column = textRange.start.column + caret
-        textRange.end.column = textRange.start.column
+        textRange.end.column = textRange.end.column + caret
+        textRange.start.column = textRange.end.column
+        textRange.start.line = textRange.end.line
         invocation.buffer.selections.add(textRange)
     }
     
@@ -148,8 +149,9 @@ class SourceEditorCommand: NSObject, XCSourceEditorCommand {
         let caret = caretRight(textRange: textRange, lines: invocation.buffer.lines)
         
         invocation.buffer.selections.removeAllObjects()
-        textRange.start.column = textRange.start.column + caret
-        textRange.end.column = textRange.start.column
+        textRange.end.column = textRange.end.column + caret
+        textRange.start.column = textRange.end.column
+        textRange.start.line = textRange.end.line
         invocation.buffer.selections.add(textRange)
     }
     
@@ -169,6 +171,13 @@ class SourceEditorCommand: NSObject, XCSourceEditorCommand {
         
         if textRange.end.line == -1 {
             return
+        }
+        
+        let newLine = invocation.buffer.lines.object(at: textRange.end.line) as! String
+        let newLineCharacters = newLine.split(separator: "")
+        
+        if newLineCharacters.count - 1 < textRange.end.column {
+            textRange.end.column = newLineCharacters.count - 1
         }
         
         invocation.buffer.selections.removeAllObjects()
@@ -194,6 +203,13 @@ class SourceEditorCommand: NSObject, XCSourceEditorCommand {
         
         if textRange.end.line > invocation.buffer.lines.count {
             return
+        }
+        
+        let newLine = invocation.buffer.lines.object(at: textRange.end.line) as! String
+        let newLineCharacters = newLine.split(separator: "")
+        
+        if newLineCharacters.count - 1 < textRange.end.column {
+            textRange.end.column = newLineCharacters.count - 1
         }
         
         invocation.buffer.selections.removeAllObjects()
@@ -348,7 +364,8 @@ class SourceEditorCommand: NSObject, XCSourceEditorCommand {
         
         let line = invocation.buffer.lines.object(at: textRange.end.line) as! String
         let lineCharacters = line.split(separator: "")
-        if textRange.end.column <= lineCharacters.count {
+        
+        if textRange.end.column < lineCharacters.count - 1 {
             textRange.end.column += 1
         }
         
