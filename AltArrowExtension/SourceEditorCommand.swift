@@ -238,11 +238,11 @@ class SourceEditorCommand: NSObject, XCSourceEditorCommand {
         while true {
             let leftCharactersToTheLeft = currentLineCharacters[0..<(textRange.end.column + caret + 1)]
             if leftCharactersToTheLeft.dropFirst().allSatisfy( { $0 == " " } ) {
-                if caret != 0 {
+                if caret != -1 && caret != 0 {
                     caret += 1
                     break
                 }
-                textRange.end.column = -1
+                textRange.end.column = 0
                 invocation.buffer.selections.removeAllObjects()
                 invocation.buffer.selections.add(textRange)
                 SourceEditorCommand.previousTextRangeValue = textRange
