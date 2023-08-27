@@ -68,6 +68,8 @@ class SourceEditorCommand: NSObject, XCSourceEditorCommand {
     fileprivate func previousValueCheck(newValue: XCSourceTextRange) -> XCSourceTextRange {
         
         if (newValue.start.column == SourceEditorCommand.previousTextRangeValue.end.column &&
+            newValue.start.line == SourceEditorCommand.previousTextRangeValue.end.line &&
+            newValue.end.column == SourceEditorCommand.previousTextRangeValue.start.column &&
             newValue.end.line == SourceEditorCommand.previousTextRangeValue.start.line) {
             
             newValue.end = SourceEditorCommand.previousTextRangeValue.end
@@ -77,7 +79,8 @@ class SourceEditorCommand: NSObject, XCSourceEditorCommand {
     }
     
     fileprivate func isSelection(textRange: XCSourceTextRange) -> Bool {
-        if (textRange.start.column == textRange.end.column && textRange.start.line == textRange.end.line) {
+        if (textRange.start.column == textRange.end.column
+            && textRange.start.line == textRange.end.line) {
             return false
         }
         return true
@@ -181,7 +184,7 @@ class SourceEditorCommand: NSObject, XCSourceEditorCommand {
         
         let textRange = previousValueCheck(newValue: invocation.buffer.selections.firstObject as! XCSourceTextRange)
         
-        if textRange.end.line == 1 {
+        if textRange.end.line == 0 {
             return
         }
         
@@ -220,7 +223,7 @@ class SourceEditorCommand: NSObject, XCSourceEditorCommand {
         
         let textRange = previousValueCheck(newValue: invocation.buffer.selections.firstObject as! XCSourceTextRange)
         
-        if textRange.end.line >= invocation.buffer.lines.count - 1 {
+        if textRange.end.line >= invocation.buffer.lines.count {
             return
         }
         
@@ -301,8 +304,8 @@ class SourceEditorCommand: NSObject, XCSourceEditorCommand {
     fileprivate func moveSelectionOneWordLeft(invocation: XCSourceEditorCommandInvocation) {
         
         let textRange = previousValueCheck(newValue: invocation.buffer.selections.firstObject as! XCSourceTextRange)
-        
         let caret = caretLeft(textRange: textRange, lines: invocation.buffer.lines)
+        
         
         invocation.buffer.selections.removeAllObjects()
         textRange.end.column = textRange.end.column + caret

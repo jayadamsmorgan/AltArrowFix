@@ -64,15 +64,29 @@ struct Command {
     static let moveSelectionR = (CommandName.moveSelectionR, CommandIdentifier.moveSelectionR)
     
     private static func all() -> [(CommandName, CommandIdentifier)] {
-        return [moveCursorWL, moveCursorWR, moveSelectionWR, moveSelectionWL, moveSelectionWU, moveSelectionWU2, moveSelectionWD, moveSelectionWD2, moveSelectionWEnd, moveSelectionWStart, moveSelectionL, moveSelectionR]
+        return [
+            moveCursorWL,
+            moveCursorWR,
+            moveSelectionWR,
+            moveSelectionWL,
+            moveSelectionWU,
+            moveSelectionWU2,
+            moveSelectionWD,
+            moveSelectionWD2,
+            moveSelectionWEnd,
+            moveSelectionWStart,
+            moveSelectionL,
+            moveSelectionR
+        ]
     }
     
     static func allCommands() -> [[XCSourceEditorCommandDefinitionKey: Any]] {
         return all().map {
+            
             [XCSourceEditorCommandDefinitionKey.classNameKey: className,
              XCSourceEditorCommandDefinitionKey.identifierKey: $0.1.rawValue,
              XCSourceEditorCommandDefinitionKey.nameKey: $0.0.rawValue
-             ]
+            ]
         }
     }
     
